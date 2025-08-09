@@ -1,2 +1,0 @@
-/home/penna/llvm/bin/llvm-ar qc libengine.a CMakeFiles/engine.dir/src/engine.cpp.o
-/home/penna/llvm/bin/llvm-ranlib libengine.a

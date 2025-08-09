@@ -1,0 +1,21 @@
+# C++ build and IDE files
+/build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.o
+*.obj
+*.so
+*.a
+*.exe
+*.out
+*.log
+*.user
+*.swp
+*.sdf
+*.opensdf
+*.VC.db
+*.VC.opendb
+.DS_Store
+.vscode/

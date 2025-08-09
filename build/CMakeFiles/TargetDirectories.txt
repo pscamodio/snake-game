@@ -1,8 +1,0 @@
-/home/penna/Dev/cpp-games/snake/build/CMakeFiles/edit_cache.dir
-/home/penna/Dev/cpp-games/snake/build/CMakeFiles/rebuild_cache.dir
-/home/penna/Dev/cpp-games/snake/build/engine/CMakeFiles/engine.dir
-/home/penna/Dev/cpp-games/snake/build/engine/CMakeFiles/edit_cache.dir
-/home/penna/Dev/cpp-games/snake/build/engine/CMakeFiles/rebuild_cache.dir
-/home/penna/Dev/cpp-games/snake/build/game/CMakeFiles/game.dir
-/home/penna/Dev/cpp-games/snake/build/game/CMakeFiles/edit_cache.dir
-/home/penna/Dev/cpp-games/snake/build/game/CMakeFiles/rebuild_cache.dir

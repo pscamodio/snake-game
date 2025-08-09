@@ -1,1 +1,0 @@
-/home/penna/llvm/bin/clang++ CMakeFiles/game.dir/src/main.cpp.o -o game  ../engine/libengine.a
