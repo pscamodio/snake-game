@@ -4,3 +4,4 @@ add_executable(game
 
 target_link_libraries(game PRIVATE engine)
 target_include_directories(game PRIVATE ${CMAKE_SOURCE_DIR}/engine/include)
+myproject_set_project_warnings(game)
