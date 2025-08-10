@@ -18,4 +18,3 @@ Makefile
 *.VC.db
 *.VC.opendb
 .DS_Store
-.vscode/
