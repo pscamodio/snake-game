@@ -1,5 +1,6 @@
 #pragma once
 
-namespace engine {
-    void hello();
+namespace engine
+{
+void hello();
 }

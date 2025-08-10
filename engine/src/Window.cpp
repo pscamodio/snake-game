@@ -1,27 +1,32 @@
 #include "Window.h"
 #include <raylib.h>
 
-namespace engine {
+namespace engine
+{
 
-
-Window::Window(int width, int height, const char* title) {
+Window::Window(int width, int height, const char *title)
+{
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(width, height, title);
 }
 
-Window::~Window() {
+Window::~Window()
+{
     CloseWindow();
 }
 
-bool Window::shouldClose() const {
+bool Window::shouldClose() const
+{
     return WindowShouldClose();
 }
 
-void Window::beginDrawing() const {
+void Window::beginDrawing() const
+{
     BeginDrawing();
 }
 
-void Window::endDrawing() const {
+void Window::endDrawing() const
+{
     EndDrawing();
 }
 

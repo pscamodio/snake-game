@@ -1,11 +1,12 @@
 
-#include <engine.h>
 #include <Window.h>
+#include <engine.h>
 
-
-int main() {
+int main()
+{
     engine::Window window(1280, 800, "Snake Game");
-    while (!window.shouldClose()) {
+    while (!window.shouldClose())
+    {
         window.beginDrawing();
         // Draw game content here
         window.endDrawing();
