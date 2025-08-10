@@ -4,6 +4,7 @@ find_program(CLANG_TIDY_BIN clang-tidy)
 file(GLOB_RECURSE ALL_CLANG_TIDY_FILES
     "${CMAKE_SOURCE_DIR}/engine/include/*.h"
     "${CMAKE_SOURCE_DIR}/engine/src/*.cpp"
+    "${CMAKE_SOURCE_DIR}/game/src/*.h"
     "${CMAKE_SOURCE_DIR}/game/src/*.cpp"
 )
 
