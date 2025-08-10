@@ -9,7 +9,7 @@ file(GLOB_RECURSE ALL_CLANG_TIDY_FILES
 
 if(CLANG_TIDY_BIN)
     add_custom_target(clang-tidy
-        COMMAND ${CLANG_TIDY_BIN} ${ALL_CLANG_TIDY_FILES} -- -I${CMAKE_SOURCE_DIR}/engine/include -I${CMAKE_SOURCE_DIR}/engine/src -I${CMAKE_SOURCE_DIR}/game/src
+        COMMAND ${CLANG_TIDY_BIN} -p build ${ALL_CLANG_TIDY_FILES}
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
         COMMENT "Running clang-tidy on all C/C++ files"
     )

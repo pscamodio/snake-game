@@ -1,15 +1,16 @@
-
-#include <Window.h>
-#include <engine.h>
+#include "settings.h"
+#include <raylib.h>
 
 int main()
 {
-    engine::Window window(1280, 800, "Snake Game");
-    while (!window.shouldClose())
+    const auto settings = Settings{};
+    InitWindow(settings.screenWidth, settings.screenHeight, settings.windowTitle);
+    SetWindowState(FLAG_WINDOW_RESIZABLE);
+    while (!WindowShouldClose())
     {
-        window.beginDrawing();
+        BeginDrawing();
         // Draw game content here
-        window.endDrawing();
+        EndDrawing();
     }
     return 0;
 }

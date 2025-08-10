@@ -2,3 +2,12 @@ Checks: 'clang-analyzer-*,bugprone-*,performance-*,readability-*'
 WarningsAsErrors: ''
 HeaderFilterRegex: '.*'
 FormatStyle: file
+CheckOptions:
+  - key: readability-magic-numbers.IgnoredValues
+    value: '0;1;-1;2;255;256;3.14'
+  - key: readability-magic-numbers.IgnoreEnums
+    value: true
+  - key: readability-magic-numbers.IgnoreArrayInit
+    value: true
+  - key: readability-magic-numbers.IgnoreStructInit
+    value: true

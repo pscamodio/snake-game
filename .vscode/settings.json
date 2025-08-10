@@ -1,3 +1,6 @@
 {
+    "[cpp]": {
+        "editor.formatOnSave": true
+    },
     "clang-tidy.buildPath": "build"
 }

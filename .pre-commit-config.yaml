@@ -12,6 +12,7 @@ repos:
     stages: [pre-commit]
   - id: clang-tidy
     stages: [pre-commit]
+    args: [-p=build]
 - repo: https://github.com/commitizen-tools/commitizen
   rev: v4.8.3
   hooks:
