@@ -5,6 +5,6 @@ file(GLOB_RECURSE GAME_SOURCES CONFIGURE_DEPENDS
 
 add_executable(game ${GAME_SOURCES})
 
-target_link_libraries(game PRIVATE engine)
+target_link_libraries(game PRIVATE engine raygui)
 target_include_directories(game PRIVATE ${CMAKE_SOURCE_DIR}/engine/include)
 myproject_set_project_warnings(game)

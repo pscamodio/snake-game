@@ -3,13 +3,13 @@ project(snake)
 # Enable generation of compile_commands.json for clang-tidy and tooling
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+include(cmake/warnings.cmake)
 include(cmake/clang-tidy.cmake)
 include(cmake/clang-format.cmake)
 
 include(cmake/cmake-format.cmake)
 include(cmake/get_cpm.cmake)
 include(cmake/dependencies.cmake)
-include(cmake/warnings.cmake)
 
 add_subdirectory(engine)
 add_subdirectory(game)
