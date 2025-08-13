@@ -11,6 +11,7 @@ Game::Game()
     SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
     InitWindow(m_runtimeState.windowWidth, m_runtimeState.windowHeight, m_settings.windowTitle);
     SetWindowMinSize(m_settings.minScreenWidth, m_settings.minScreenHeight);
+    SetTargetFPS(m_settings.targetFps);
     m_currentScene = std::make_unique<Menu>();
     m_gameRenderTarget = std::make_unique<Resource<RenderTexture2D>>(
         LoadRenderTexture(static_cast<int>(m_settings.gameWidth),
@@ -87,14 +88,16 @@ void Game::renderToWindow()
     BeginDrawing();
     ClearBackground(BLACK); // Clear screen background
 
+    const auto source =
+        Rectangle{0.0f, 0.0f, static_cast<float>(m_gameRenderTarget->resource.texture.width),
+                  static_cast<float>(-m_gameRenderTarget->resource.texture.height)};
+
+    const auto target = Rectangle{(windowWidth - (m_settings.gameWidth * scale)) * 0.5f,
+                                  (windowHeight - (m_settings.gameHeight * scale)) * 0.5f,
+                                  m_settings.gameWidth * scale, m_settings.gameHeight * scale};
+
     // Draw render texture to screen, properly scaled
-    DrawTexturePro(m_gameRenderTarget->resource.texture,
-                   {0.0f, 0.0f, static_cast<float>(m_gameRenderTarget->resource.texture.width),
-                    static_cast<float>(-m_gameRenderTarget->resource.texture.height)},
-                   {(windowWidth - (m_settings.gameWidth * scale)) * 0.5f,
-                    (windowHeight - (m_settings.gameHeight * scale)) * 0.5f,
-                    m_settings.gameWidth * scale, m_settings.gameHeight * scale},
-                   {0, 0}, 0.0f, WHITE);
+    DrawTexturePro(m_gameRenderTarget->resource.texture, source, target, {0, 0}, 0.0f, WHITE);
     EndDrawing();
 }
 

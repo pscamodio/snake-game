@@ -11,6 +11,7 @@ struct Settings
     // all the game logic/rendering should refer to this size
     const float gameWidth = 1280.F;
     const float gameHeight = 720.F;
+    const int targetFps = 60;
 };
 
 struct RuntimeState
