@@ -15,29 +15,28 @@ Level1::~Level1()
 
 void Level1::update([[maybe_unused]] Game &game, [[maybe_unused]] float deltaTime)
 {
-    if (IsKeyPressed(KEY_LEFT))
-    {
-        m_snake.direction = {-1, 0};
-    }
-    else if (IsKeyPressed(KEY_RIGHT))
-    {
-        m_snake.direction = {1, 0};
-    }
-    else if (IsKeyPressed(KEY_UP))
-    {
-        m_snake.direction = {0, -1};
-    }
-    else if (IsKeyPressed(KEY_DOWN))
-    {
-        m_snake.direction = {0, 1};
-    }
+    if (!m_alive)
+        return;
+    updateSnakeDirectionFromKeyboard(m_snake);
 
     m_timer += deltaTime;
-    if (m_timer >= m_secondsForCell)
+    if (m_timer < m_secondsForCell)
+        return;
+
+    m_timer = 0;
+    const auto nextCell = m_snake.body.back() + m_snake.direction;
+    m_alive = isInsideGrid(m_grid, nextCell) && !willEatSelf(m_snake, nextCell);
+    if (m_alive)
     {
-        m_snake.body[0].row += m_snake.direction.row;
-        m_snake.body[0].col += m_snake.direction.col;
-        m_timer = 0;
+        if (nextCell == m_food)
+        {
+            m_snake.body.push_back(nextCell);
+            m_food = getRandomFreePosition(m_grid, m_snake.body);
+        }
+        else
+        {
+            move(m_snake);
+        }
     }
 }
 
@@ -49,11 +48,17 @@ void Level1::render(Game &game)
     stopButtonRect.width = 120;
     stopButtonRect.height = 30;
 
-    if (GuiButton(stopButtonRect, "Stop") > 0)
+    if (GuiButton(stopButtonRect, "Restart") > 0)
     {
-        game.queueSceneChange(std::make_unique<Menu>());
+        game.queueSceneChange(std::make_unique<Level1>());
     }
 
     renderGrid(m_grid, game.settings());
     renderSnake(m_grid, m_snake, game.settings());
+    renderFood(m_grid, m_food, game.settings());
+
+    if (!m_alive)
+    {
+        DrawText("Game Over", 350, 250, 20, RED);
+    }
 }

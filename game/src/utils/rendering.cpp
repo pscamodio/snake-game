@@ -38,3 +38,16 @@ void renderSnake(const Grid &grid, const Snake &snake, const Settings &settings)
         DrawRectangle(posX, posY, cellSize, cellSize, GREEN);
     }
 }
+
+void renderFood(const Grid &grid, const CellIndex &food, const Settings &settings)
+{
+    const float gameWidth = settings.gameWidth;
+    const float gameHeight = settings.gameHeight;
+    const int cellSize = settings.cellSize;
+
+    const auto posX =
+        static_cast<int>((gameWidth - (grid.cols * cellSize)) / 2.F + food.row * cellSize);
+    const auto posY =
+        static_cast<int>((gameHeight - (grid.rows * cellSize)) / 2.F + food.col * cellSize);
+    DrawRectangle(posX, posY, cellSize, cellSize, RED);
+}

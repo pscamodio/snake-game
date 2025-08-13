@@ -13,10 +13,12 @@ class Level1 : public Scene
     void render(Game &game) override;
 
   private:
+    bool m_alive = true;
     Grid m_grid{10, 10};
     Snake m_snake{{{0, 0}}, {1, 0}};
 
     float m_timer = 0;
+    const float m_secondsForCell = 0.1F;
 
-    const float m_secondsForCell = 0.5;
+    CellIndex m_food = {5, 5};
 };
