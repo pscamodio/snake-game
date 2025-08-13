@@ -12,14 +12,20 @@ Snake::~Snake()
     // Cleanup snake
 }
 
-void Snake::update(Game &game, float deltaTime)
+void Snake::update([[maybe_unused]] Game &game, [[maybe_unused]] float deltaTime)
 {
     // Update snake logic
 }
 
 void Snake::render(Game &game)
 {
-    if (GuiButton((Rectangle){24, 24, 120, 30}, "Stop") > 0)
+    Rectangle stopButtonRect;
+    stopButtonRect.x = 24;
+    stopButtonRect.y = 24;
+    stopButtonRect.width = 120;
+    stopButtonRect.height = 30;
+
+    if (GuiButton(stopButtonRect, "Stop") > 0)
     {
         game.queueSceneChange(std::make_unique<Menu>());
     }

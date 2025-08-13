@@ -20,13 +20,14 @@ void Menu::update([[maybe_unused]] Game &game, [[maybe_unused]] float deltaTime)
 void Menu::render(Game &game)
 {
     const auto &settings = game.settings();
-    int buttonWidth = 200;
-    int buttonHeight = 50;
-    int centerX = (settings.screenWidth / 2) - (buttonWidth / 2);
-    int centerY = (settings.screenHeight / 2) - (buttonHeight / 2);
+    float buttonWidth = 200.F;
+    float buttonHeight = 50.F;
+    float screenWidth = static_cast<float>(settings.screenWidth);
+    float screenHeight = static_cast<float>(settings.screenHeight);
+    float centerX = (screenWidth / 2.F) - (buttonWidth / 2.F);
+    float centerY = (screenHeight / 2.F) - (buttonHeight / 2.F);
 
-    if (GuiButton({(float)centerX, (float)centerY, (float)buttonWidth, (float)buttonHeight},
-                  "Play Snake") > 0)
+    if (GuiButton({centerX, centerY, buttonWidth, buttonHeight}, "Play Snake") > 0)
     {
         game.queueSceneChange(std::make_unique<Snake>());
     }
