@@ -4,6 +4,8 @@ project(snake)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 20)
 
+include(cmake/options.cmake)
+include(cmake/sanitizers.cmake)
 include(cmake/warnings.cmake)
 include(cmake/clang-tidy.cmake)
 include(cmake/clang-format.cmake)

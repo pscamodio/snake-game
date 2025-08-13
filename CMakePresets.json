@@ -13,7 +13,8 @@
       "binaryDir": "${sourceDir}/build/develop",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "RelWithDebInfo",
-        "SNAKE_WARNINGS_AS_ERRORS": "ON"
+        "SNAKE_WARNINGS_AS_ERRORS": "ON",
+        "SNAKE_USE_SANITIZERS": "ON"
       }
     },
     {
@@ -23,7 +24,8 @@
       "binaryDir": "${sourceDir}/build/debug",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
-        "SNAKE_WARNINGS_AS_ERRORS": "OFF"
+        "SNAKE_WARNINGS_AS_ERRORS": "OFF",
+        "SNAKE_USE_SANITIZERS": "ON"
       }
     },
     {
@@ -33,7 +35,8 @@
       "binaryDir": "${sourceDir}/build/release",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
-        "SNAKE_WARNINGS_AS_ERRORS": "OFF"
+        "SNAKE_WARNINGS_AS_ERRORS": "OFF",
+        "SNAKE_USE_SANITIZERS": "OFF"
       }
     }
   ]
