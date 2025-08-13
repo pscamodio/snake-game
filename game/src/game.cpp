@@ -39,15 +39,15 @@ void Game::run()
 
 void Game::updateGameState()
 {
-    const auto windowWidth = GetScreenWidth();
-    const auto windowHeight = GetScreenHeight();
-    const auto gameWidth = static_cast<int>(m_settings.gameWidth);
-    const auto gameHeight = static_cast<int>(m_settings.gameHeight);
+    const auto windowWidth = static_cast<float>(GetScreenWidth());
+    const auto windowHeight = static_cast<float>(GetScreenHeight());
+    const auto gameWidth = static_cast<float>(m_settings.gameWidth);
+    const auto gameHeight = static_cast<float>(m_settings.gameHeight);
     const auto scale = std::min(static_cast<float>(m_runtimeState.windowWidth) / gameWidth,
                                 static_cast<float>(m_runtimeState.windowHeight) / gameHeight);
 
-    m_runtimeState.windowWidth = windowWidth;
-    m_runtimeState.windowHeight = windowHeight;
+    m_runtimeState.windowWidth = static_cast<int>(windowWidth);
+    m_runtimeState.windowHeight = static_cast<int>(windowHeight);
     m_runtimeState.scale = scale;
 
     // Compute mouse position in the game coordinate system

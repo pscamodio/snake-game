@@ -1,4 +1,5 @@
 #include "grid.h"
+#include <algorithm>
 
 bool isInsideGrid(const Grid &grid, const CellIndex &cell)
 {

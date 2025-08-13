@@ -3,15 +3,16 @@
 
 void renderGrid(const Grid &grid, const Settings &settings)
 {
-    const auto [row, cols] = grid;
+    const auto rows = grid.rows;
+    const auto cols = grid.cols;
     const float gameWidth = settings.gameWidth;
     const float gameHeight = settings.gameHeight;
-    const int cellSize = settings.cellSize;
+    const float cellSize = static_cast<float>(settings.cellSize);
 
-    const float startX = (gameWidth - (cols * cellSize)) / 2.F;
-    const float startY = (gameHeight - (row * cellSize)) / 2.F;
+    const float startX = (gameWidth - (static_cast<float>(cols) * cellSize)) / 2.F;
+    const float startY = (gameHeight - (static_cast<float>(rows) * cellSize)) / 2.F;
 
-    for (int i = 0; i <= row; ++i)
+    for (int i = 0; i <= rows; ++i)
     {
         DrawLineEx({startX, startY + i * cellSize},
                    {startX + cols * cellSize, startY + i * cellSize}, 4.F, LIGHTGRAY);
@@ -19,35 +20,42 @@ void renderGrid(const Grid &grid, const Settings &settings)
     for (int j = 0; j <= cols; ++j)
     {
         DrawLineEx({startX + j * cellSize, startY},
-                   {startX + j * cellSize, startY + row * cellSize}, 4.F, LIGHTGRAY);
+                   {startX + j * cellSize, startY + static_cast<float>(rows) * cellSize}, 4.F,
+                   LIGHTGRAY);
     }
 }
 
 void renderSnake(const Grid &grid, const Snake &snake, const Settings &settings)
 {
+    const auto rows = static_cast<float>(grid.rows);
+    const auto cols = static_cast<float>(grid.cols);
     const float gameWidth = settings.gameWidth;
     const float gameHeight = settings.gameHeight;
-    const int cellSize = settings.cellSize;
+    const float cellSize = static_cast<float>(settings.cellSize);
 
     for (const auto &segment : snake.body)
     {
+        const auto segmentRow = static_cast<float>(segment.row);
+        const auto segmentCol = static_cast<float>(segment.col);
         const auto posX =
-            static_cast<int>((gameWidth - (grid.cols * cellSize)) / 2.F + segment.row * cellSize);
+            static_cast<int>((gameWidth - (cols * cellSize)) / 2.F + segmentRow * cellSize);
         const auto posY =
-            static_cast<int>((gameHeight - (grid.rows * cellSize)) / 2.F + segment.col * cellSize);
-        DrawRectangle(posX, posY, cellSize, cellSize, GREEN);
+            static_cast<int>((gameHeight - (rows * cellSize)) / 2.F + segmentCol * cellSize);
+        DrawRectangle(posX, posY, settings.cellSize, settings.cellSize, GREEN);
     }
 }
 
 void renderFood(const Grid &grid, const CellIndex &food, const Settings &settings)
 {
+    const auto rows = static_cast<float>(grid.rows);
+    const auto cols = static_cast<float>(grid.cols);
     const float gameWidth = settings.gameWidth;
     const float gameHeight = settings.gameHeight;
-    const int cellSize = settings.cellSize;
+    const float cellSize = static_cast<float>(settings.cellSize);
+    const auto foodRow = static_cast<float>(food.row);
+    const auto foodCol = static_cast<float>(food.col);
 
-    const auto posX =
-        static_cast<int>((gameWidth - (grid.cols * cellSize)) / 2.F + food.row * cellSize);
-    const auto posY =
-        static_cast<int>((gameHeight - (grid.rows * cellSize)) / 2.F + food.col * cellSize);
-    DrawRectangle(posX, posY, cellSize, cellSize, RED);
+    const auto posX = static_cast<int>((gameWidth - (cols * cellSize)) / 2.F + foodRow * cellSize);
+    const auto posY = static_cast<int>((gameHeight - (rows * cellSize)) / 2.F + foodCol * cellSize);
+    DrawRectangle(posX, posY, settings.cellSize, settings.cellSize, RED);
 }
