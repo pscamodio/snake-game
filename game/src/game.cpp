@@ -2,6 +2,7 @@
 #include "scenes/menu/menu.h"
 #include "scenes/scene.h"
 #include <algorithm>
+#include <raygui.h>
 #include <raylib.h>
 
 Game::Game()
@@ -14,6 +15,7 @@ Game::Game()
         LoadRenderTexture(static_cast<int>(m_settings.gameWidth),
                           static_cast<int>(m_settings.gameHeight)),
         UnloadRenderTexture);
+    m_defaultFont = GuiGetFont();
 }
 
 Game::~Game()
@@ -58,6 +60,8 @@ void Game::updateGameState()
     SetMouseOffset(-static_cast<int>(windowWidth - (gameWidth * scale)) / 2,
                    -static_cast<int>(windowHeight - (gameHeight * scale)) / 2);
     SetMouseScale(1 / scale, 1 / scale);
+
+    GuiSetStyle(DEFAULT, TEXT_SIZE, static_cast<int>(20 / scale));
 }
 
 void Game::updateScene()
@@ -110,4 +114,9 @@ void Game::changeSceneIfNeeded()
 auto Game::settings() const -> const Settings &
 {
     return m_settings;
+}
+
+auto Game::runtimeState() const -> const RuntimeState &
+{
+    return m_runtimeState;
 }

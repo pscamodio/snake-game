@@ -20,8 +20,9 @@ void Menu::update([[maybe_unused]] Game &game, [[maybe_unused]] float deltaTime)
 void Menu::render(Game &game)
 {
     const auto &settings = game.settings();
-    float buttonWidth = 200.F;
-    float buttonHeight = 50.F;
+    const auto scale = game.runtimeState().scale;
+    float buttonWidth = 200.F / scale;
+    float buttonHeight = 50.F / scale;
     float centerX = (settings.gameWidth / 2.F) - (buttonWidth / 2.F);
     float centerY = (settings.gameHeight / 2.F) - (buttonHeight / 2.F);
 
