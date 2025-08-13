@@ -1,4 +1,6 @@
 #pragma once
+#include "../../objects/grid.h"
+#include "../../objects/snake.h"
 #include "../scene.h"
 
 class Level1 : public Scene
@@ -9,4 +11,12 @@ class Level1 : public Scene
     void update(Game &game, float deltaTime) override;
 
     void render(Game &game) override;
+
+  private:
+    Grid m_grid{10, 10};
+    Snake m_snake{{{0, 0}}, {1, 0}};
+
+    float m_timer = 0;
+
+    const float m_secondsForCell = 0.5;
 };

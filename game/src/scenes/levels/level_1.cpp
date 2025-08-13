@@ -1,4 +1,5 @@
 #include "level_1.h"
+#include "../../utils/rendering.h"
 #include "../menu/menu.h"
 #include "raygui.h"
 
@@ -14,7 +15,30 @@ Level1::~Level1()
 
 void Level1::update([[maybe_unused]] Game &game, [[maybe_unused]] float deltaTime)
 {
-    // Update level 1 logic
+    if (IsKeyPressed(KEY_LEFT))
+    {
+        m_snake.direction = {-1, 0};
+    }
+    else if (IsKeyPressed(KEY_RIGHT))
+    {
+        m_snake.direction = {1, 0};
+    }
+    else if (IsKeyPressed(KEY_UP))
+    {
+        m_snake.direction = {0, -1};
+    }
+    else if (IsKeyPressed(KEY_DOWN))
+    {
+        m_snake.direction = {0, 1};
+    }
+
+    m_timer += deltaTime;
+    if (m_timer >= m_secondsForCell)
+    {
+        m_snake.body[0].row += m_snake.direction.row;
+        m_snake.body[0].col += m_snake.direction.col;
+        m_timer = 0;
+    }
 }
 
 void Level1::render(Game &game)
@@ -29,4 +53,7 @@ void Level1::render(Game &game)
     {
         game.queueSceneChange(std::make_unique<Menu>());
     }
+
+    renderGrid(m_grid, game.settings());
+    renderSnake(m_grid, m_snake, game.settings());
 }
