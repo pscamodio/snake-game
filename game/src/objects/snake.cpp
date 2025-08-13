@@ -1,24 +1,29 @@
 #include "snake.h"
 #include "raylib.h"
 
-void updateSnakeDirectionFromKeyboard(Snake &snake)
+bool updateSnakeDirectionFromKeyboard(Snake &snake)
 {
     if (IsKeyPressed(KEY_LEFT) && snake.direction.row != 1)
     {
         snake.direction = {-1, 0};
+        return true;
     }
     else if (IsKeyPressed(KEY_RIGHT) && snake.direction.row != -1)
     {
         snake.direction = {1, 0};
+        return true;
     }
     else if (IsKeyPressed(KEY_UP) && snake.direction.col != 1)
     {
         snake.direction = {0, -1};
+        return true;
     }
     else if (IsKeyPressed(KEY_DOWN) && snake.direction.col != -1)
     {
         snake.direction = {0, 1};
+        return true;
     }
+    return false;
 }
 
 void move(Snake &snake)

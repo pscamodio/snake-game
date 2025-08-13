@@ -9,6 +9,6 @@ struct Snake
     CellIndex direction;
 };
 
-void updateSnakeDirectionFromKeyboard(Snake &snake);
+bool updateSnakeDirectionFromKeyboard(Snake &snake);
 void move(Snake &snake);
 bool willEatSelf(const Snake &snake, const CellIndex &nextMove);

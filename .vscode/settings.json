@@ -76,6 +76,7 @@
     "mutex": "cpp",
     "print": "cpp",
     "sstream": "cpp",
-    "stack": "cpp"
+    "stack": "cpp",
+    "*.m": "cpp"
   }
 }

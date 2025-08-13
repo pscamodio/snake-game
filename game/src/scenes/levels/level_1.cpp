@@ -17,10 +17,10 @@ void Level1::update([[maybe_unused]] Game &game, [[maybe_unused]] float deltaTim
 {
     if (!m_alive)
         return;
-    updateSnakeDirectionFromKeyboard(m_snake);
+    const auto hasMoved = updateSnakeDirectionFromKeyboard(m_snake);
 
     m_timer += deltaTime;
-    if (m_timer < m_secondsForCell)
+    if (m_timer < m_secondsForCell || hasMoved)
         return;
 
     m_timer = 0;

@@ -88,23 +88,25 @@ function(myproject_set_project_warnings project_name)
     MSVC_WARNINGS
     /WX)
 
-  if(MSVC)
-    set(PROJECT_WARNINGS_CXX ${MSVC_WARNINGS})
-  elseif(
-    CMAKE_CXX_COMPILER_ID
-    MATCHES
-    ".*Clang")
-    set(PROJECT_WARNINGS_CXX ${CLANG_WARNINGS})
-  elseif(
-    CMAKE_CXX_COMPILER_ID
-    STREQUAL
-    "GNU")
-    set(PROJECT_WARNINGS_CXX ${GCC_WARNINGS})
-  else()
-    message(
-      AUTHOR_WARNING
-        "No compiler warnings set for CXX compiler: '${CMAKE_CXX_COMPILER_ID}'")
-    # TODO support Intel compiler
+  if (ENABLE_WARNINGS_AS_ERRORS)
+        if(MSVC)
+        set(PROJECT_WARNINGS_CXX ${MSVC_WARNINGS})
+        elseif(
+        CMAKE_CXX_COMPILER_ID
+        MATCHES
+        ".*Clang")
+        set(PROJECT_WARNINGS_CXX ${CLANG_WARNINGS})
+        elseif(
+        CMAKE_CXX_COMPILER_ID
+        STREQUAL
+        "GNU")
+        set(PROJECT_WARNINGS_CXX ${GCC_WARNINGS})
+        else()
+        message(
+        AUTHOR_WARNING
+                "No compiler warnings set for CXX compiler: '${CMAKE_CXX_COMPILER_ID}'")
+        # TODO support Intel compiler
+        endif()
   endif()
 
   # use the same warning flags for C
