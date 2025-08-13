@@ -13,7 +13,7 @@
       "binaryDir": "${sourceDir}/build/develop",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "RelWithDebInfo",
-        "ENABLE_WARNINGS_AS_ERRORS": "ON"
+        "SNAKE_WARNINGS_AS_ERRORS": "ON"
       }
     },
     {
@@ -23,7 +23,7 @@
       "binaryDir": "${sourceDir}/build/debug",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
-        "ENABLE_WARNINGS_AS_ERRORS": "OFF"
+        "SNAKE_WARNINGS_AS_ERRORS": "OFF"
       }
     },
     {
@@ -33,7 +33,7 @@
       "binaryDir": "${sourceDir}/build/release",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
-        "ENABLE_WARNINGS_AS_ERRORS": "OFF"
+        "SNAKE_WARNINGS_AS_ERRORS": "OFF"
       }
     }
   ]
