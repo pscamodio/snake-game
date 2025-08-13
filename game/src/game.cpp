@@ -10,11 +10,13 @@ Game::Game()
     // Initialize the window with settings
     SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
     InitWindow(m_runtimeState.windowWidth, m_runtimeState.windowHeight, m_settings.windowTitle);
+    SetWindowMinSize(m_settings.minScreenWidth, m_settings.minScreenHeight);
     m_currentScene = std::make_unique<Menu>();
     m_gameRenderTarget = std::make_unique<Resource<RenderTexture2D>>(
         LoadRenderTexture(static_cast<int>(m_settings.gameWidth),
                           static_cast<int>(m_settings.gameHeight)),
         UnloadRenderTexture);
+    SetTextureFilter(m_gameRenderTarget->resource.texture, TEXTURE_FILTER_BILINEAR);
     m_defaultFont = GuiGetFont();
 }
 
@@ -47,7 +49,7 @@ void Game::updateGameState()
     m_runtimeState.windowHeight = windowHeight;
     m_runtimeState.scale = scale;
 
-    // Update virtual mouse (clamped mouse value behind game screen)
+    // Compute mouse position in the game coordinate system
     Vector2 mouse = GetMousePosition();
     Vector2 virtualMouse = {0, 0};
     virtualMouse.x = std::clamp((mouse.x - (windowWidth - (gameWidth * scale)) * 0.5f) / scale, 0.F,
@@ -55,8 +57,7 @@ void Game::updateGameState()
     virtualMouse.y = std::clamp((mouse.y - (windowHeight - (gameHeight * scale)) * 0.5f) / scale,
                                 0.F, static_cast<float>(gameHeight));
 
-    // Apply the same transformation as the virtual mouse to the real mouse (i.e. to work with
-    // raygui)
+    // Update mouse position for GUI interactions
     SetMouseOffset(-static_cast<int>(windowWidth - (gameWidth * scale)) / 2,
                    -static_cast<int>(windowHeight - (gameHeight * scale)) / 2);
     SetMouseScale(1 / scale, 1 / scale);
