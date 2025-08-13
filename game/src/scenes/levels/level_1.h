@@ -1,11 +1,11 @@
 #pragma once
 #include "../scene.h"
 
-class Snake : public Scene
+class Level1 : public Scene
 {
   public:
-    Snake();
-    ~Snake() override;
+    Level1();
+    ~Level1() override;
     void update(Game &game, float deltaTime) override;
 
     void render(Game &game) override;

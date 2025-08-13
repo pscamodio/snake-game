@@ -1,23 +1,23 @@
-#include "snake.h"
+#include "level_1.h"
 #include "../menu/menu.h"
 #include "raygui.h"
 
-Snake::Snake()
+Level1::Level1()
 {
-    // Initialize snake
+    // Initialize level 1
 }
 
-Snake::~Snake()
+Level1::~Level1()
 {
-    // Cleanup snake
+    // Cleanup level 1
 }
 
-void Snake::update([[maybe_unused]] Game &game, [[maybe_unused]] float deltaTime)
+void Level1::update([[maybe_unused]] Game &game, [[maybe_unused]] float deltaTime)
 {
-    // Update snake logic
+    // Update level 1 logic
 }
 
-void Snake::render(Game &game)
+void Level1::render(Game &game)
 {
     Rectangle stopButtonRect;
     stopButtonRect.x = 24;
