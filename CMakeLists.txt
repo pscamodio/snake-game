@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 project(snake)
 # Enable generation of compile_commands.json for clang-tidy and tooling
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_CXX_STANDARD 20)
 
 include(cmake/warnings.cmake)
 include(cmake/clang-tidy.cmake)

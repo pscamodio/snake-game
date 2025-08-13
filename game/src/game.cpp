@@ -1,16 +1,19 @@
 #include "game.h"
 #include "scenes/menu/menu.h"
 #include "scenes/scene.h"
+#include <algorithm>
 #include <raylib.h>
 
 Game::Game()
 {
     // Initialize the window with settings
     SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
-    InitWindow(m_settings.screenWidth, m_settings.screenHeight, m_settings.windowTitle);
+    InitWindow(m_runtimeState.windowWidth, m_runtimeState.windowHeight, m_settings.windowTitle);
     m_currentScene = std::make_unique<Menu>();
     m_gameRenderTarget = std::make_unique<Resource<RenderTexture2D>>(
-        LoadRenderTexture(m_settings.gameWidth, m_settings.gameHeight), UnloadRenderTexture);
+        LoadRenderTexture(static_cast<int>(m_settings.gameWidth),
+                          static_cast<int>(m_settings.gameHeight)),
+        UnloadRenderTexture);
 }
 
 Game::~Game()
@@ -23,13 +26,38 @@ void Game::run()
     while (!WindowShouldClose())
     {
         this->changeSceneIfNeeded();
+        this->updateGameState();
+        this->updateScene();
+        this->renderToWindow();
     }
 }
 
 void Game::updateGameState()
 {
-    m_settings.screenWidth = GetScreenWidth();
-    m_settings.screenHeight = GetScreenHeight();
+    const auto windowWidth = GetScreenWidth();
+    const auto windowHeight = GetScreenHeight();
+    const auto gameWidth = static_cast<int>(m_settings.gameWidth);
+    const auto gameHeight = static_cast<int>(m_settings.gameHeight);
+    const auto scale = std::min(static_cast<float>(m_runtimeState.windowWidth) / gameWidth,
+                                static_cast<float>(m_runtimeState.windowHeight) / gameHeight);
+
+    m_runtimeState.windowWidth = windowWidth;
+    m_runtimeState.windowHeight = windowHeight;
+    m_runtimeState.scale = scale;
+
+    // Update virtual mouse (clamped mouse value behind game screen)
+    Vector2 mouse = GetMousePosition();
+    Vector2 virtualMouse = {0, 0};
+    virtualMouse.x = std::clamp((mouse.x - (windowWidth - (gameWidth * scale)) * 0.5f) / scale, 0.F,
+                                static_cast<float>(gameWidth));
+    virtualMouse.y = std::clamp((mouse.y - (windowHeight - (gameHeight * scale)) * 0.5f) / scale,
+                                0.F, static_cast<float>(gameHeight));
+
+    // Apply the same transformation as the virtual mouse to the real mouse (i.e. to work with
+    // raygui)
+    SetMouseOffset(-static_cast<int>(windowWidth - (gameWidth * scale)) / 2,
+                   -static_cast<int>(windowHeight - (gameHeight * scale)) / 2);
+    SetMouseScale(1 / scale, 1 / scale);
 }
 
 void Game::updateScene()
@@ -49,21 +77,19 @@ void Game::renderToWindow()
     if (!m_gameRenderTarget)
         return;
 
-    float scale = std::min((float)GetScreenWidth() / m_settings.gameWidth,
-                           (float)GetScreenHeight() / m_settings.gameHeight);
+    const auto &[windowWidth, windowHeight, scale] = m_runtimeState;
 
     BeginDrawing();
     ClearBackground(BLACK); // Clear screen background
 
     // Draw render texture to screen, properly scaled
     DrawTexturePro(m_gameRenderTarget->resource.texture,
-                   (Rectangle){0.0f, 0.0f, (float)m_gameRenderTarget->resource.texture.width,
-                               (float)-m_gameRenderTarget->resource.texture.height},
-                   (Rectangle){(GetScreenWidth() - ((float)m_settings.gameWidth * scale)) * 0.5f,
-                               (GetScreenHeight() - ((float)m_settings.gameHeight * scale)) * 0.5f,
-                               (float)m_settings.gameWidth * scale,
-                               (float)m_settings.gameHeight * scale},
-                   (Vector2){0, 0}, 0.0f, WHITE);
+                   {0.0f, 0.0f, static_cast<float>(m_gameRenderTarget->resource.texture.width),
+                    static_cast<float>(-m_gameRenderTarget->resource.texture.height)},
+                   {(windowWidth - (m_settings.gameWidth * scale)) * 0.5f,
+                    (windowHeight - (m_settings.gameHeight * scale)) * 0.5f,
+                    m_settings.gameWidth * scale, m_settings.gameHeight * scale},
+                   {0, 0}, 0.0f, WHITE);
     EndDrawing();
 }
 

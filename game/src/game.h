@@ -26,6 +26,7 @@ class Game
 
     // Add private member variables and functions here
     Settings m_settings = {};
+    RuntimeState m_runtimeState = {};
     std::unique_ptr<Scene> m_currentScene;
 
     std::unique_ptr<Scene> m_nextScene;

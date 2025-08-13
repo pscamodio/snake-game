@@ -22,10 +22,8 @@ void Menu::render(Game &game)
     const auto &settings = game.settings();
     float buttonWidth = 200.F;
     float buttonHeight = 50.F;
-    float screenWidth = static_cast<float>(settings.screenWidth);
-    float screenHeight = static_cast<float>(settings.screenHeight);
-    float centerX = (screenWidth / 2.F) - (buttonWidth / 2.F);
-    float centerY = (screenHeight / 2.F) - (buttonHeight / 2.F);
+    float centerX = (settings.gameWidth / 2.F) - (buttonWidth / 2.F);
+    float centerY = (settings.gameHeight / 2.F) - (buttonHeight / 2.F);
 
     if (GuiButton({centerX, centerY, buttonWidth, buttonHeight}, "Play Snake") > 0)
     {
