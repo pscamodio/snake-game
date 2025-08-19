@@ -3,7 +3,7 @@
 
 void renderGrid(const Grid &grid, const Settings &settings)
 {
-    const auto [row, cols, obstacles] = grid;
+    const auto [rows, cols, obstacles] = grid;
     const float gameWidth = settings.gameWidth;
     const float gameHeight = settings.gameHeight;
     const float cellSize = static_cast<float>(settings.cellSize);
@@ -26,7 +26,7 @@ void renderGrid(const Grid &grid, const Settings &settings)
     {
         const auto posX = static_cast<int>(startX + obstacle.row * cellSize);
         const auto posY = static_cast<int>(startY + obstacle.col * cellSize);
-        DrawRectangle(posX, posY, cellSize, cellSize, DARKGRAY);
+        DrawRectangle(posX, posY, static_cast<int>(cellSize), static_cast<int>(cellSize), DARKGRAY);
     }
 }
 

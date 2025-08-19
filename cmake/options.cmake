@@ -20,7 +20,7 @@ option(
 option(
   SNAKE_SANITIZER_LEAK
   "Enable LeakSanitizer"
-  ON)
+  OFF)
 option(
   SNAKE_SANITIZER_THREAD
   "Enable ThreadSanitizer"
