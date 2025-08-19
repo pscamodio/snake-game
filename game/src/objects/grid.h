@@ -12,4 +12,5 @@ struct Grid
 
 bool isInsideGrid(const Grid &grid, const CellIndex &cell);
 bool isObstacle(const Grid &grid, const CellIndex &cell);
+bool isValidMove(const Grid &grid, const CellIndex &cell);
 CellIndex getRandomFreePosition(const Grid &grid, const std::vector<CellIndex> &occupiedCells);

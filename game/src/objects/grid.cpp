@@ -11,6 +11,11 @@ bool isObstacle(const Grid &grid, const CellIndex &cell)
     return std::find(grid.obstacles.begin(), grid.obstacles.end(), cell) != grid.obstacles.end();
 }
 
+bool isValidMove(const Grid &grid, const CellIndex &cell)
+{
+    return isInsideGrid(grid, cell) && !isObstacle(grid, cell);
+}
+
 auto getRandomFreePosition(const Grid &grid, const std::vector<CellIndex> &occupiedCells)
     -> CellIndex
 {

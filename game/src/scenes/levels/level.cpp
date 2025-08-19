@@ -6,7 +6,7 @@
 
 Level::Level(const LevelDescription &description)
     : m_levelDescription(description), m_snake({{description.startingPosition}, {1, 0}}),
-      m_food(getRandomFreePosition(description.grid, m_snake.body))
+      m_food(getRandomFreePosition(description.grid, m_snake.body)), m_timer(description.speed)
 {
     // Initialize level 1
 }
@@ -18,44 +18,64 @@ Level::~Level()
 
 void Level::update([[maybe_unused]] Game &game, [[maybe_unused]] float deltaTime)
 {
-    if (!m_alive)
+    if (m_state != LevelState::Playing)
+    {
         return;
+    }
+
     auto state = game.gameState();
 
     const auto hasMoved = updateSnakeDirectionFromKeyboard(m_snake);
+    const auto elapsed = m_timer.update(deltaTime);
 
-    m_timer += deltaTime;
-    if (m_timer < m_levelDescription.speed || hasMoved)
-        return;
-
-    m_timer = 0;
-    const auto nextCell = m_snake.body.back() + m_snake.direction;
-    m_alive = isInsideGrid(m_levelDescription.grid, nextCell) &&
-              !isObstacle(m_levelDescription.grid, nextCell) && !willEatSelf(m_snake, nextCell);
-    if (m_alive)
+    if (!elapsed && !hasMoved)
     {
-        if (nextCell == m_food)
+        return;
+    }
+
+    m_timer.restart();
+
+    const auto nextCell = m_snake.body.back() + m_snake.direction;
+    const auto hasLost =
+        !isValidMove(m_levelDescription.grid, nextCell) || willEatSelf(m_snake, nextCell);
+    if (hasLost)
+    {
+        m_state = LevelState::GameOver;
+        return;
+    }
+
+    if (nextCell == m_food)
+    {
+        m_snake.body.push_back(nextCell);
+        m_food = getRandomFreePosition(m_levelDescription.grid, m_snake.body);
+        m_score += 1;
+        state.score += 1;
+        if (m_score >= m_levelDescription.targetScore)
         {
-            m_snake.body.push_back(nextCell);
-            m_food = getRandomFreePosition(m_levelDescription.grid, m_snake.body);
-            m_score += 1;
-            state.score += 1;
-            if (m_score >= m_levelDescription.targetScore)
-            {
-                state.level += 1;
-                game.pushGameState(state);
-                game.queueSceneChange(std::make_unique<Level>(LEVELS[state.level % LEVELS.size()]));
-            }
+            state.level += 1;
+            game.pushGameState(state);
+            game.queueSceneChange(std::make_unique<Level>(LEVELS[state.level % LEVELS.size()]));
         }
-        else
-        {
-            move(m_snake);
-        }
+    }
+    else
+    {
+        move(m_snake);
     }
 }
 
 void Level::render(Game &game)
 {
+    if (m_state == LevelState::Starting)
+    {
+        DrawText("Press any key to start", 300, 250, 20, BLACK);
+        if (GetKeyPressed() != KEY_NULL)
+        {
+            m_state = LevelState::Playing;
+            m_timer.start();
+        }
+        return;
+    }
+
     Rectangle stopButtonRect;
     stopButtonRect.x = 24;
     stopButtonRect.y = 24;
@@ -73,7 +93,7 @@ void Level::render(Game &game)
     renderSnake(grid, m_snake, game.settings());
     renderFood(grid, m_food, game.settings());
 
-    if (!m_alive)
+    if (m_state == LevelState::GameOver)
     {
         DrawText("Game Over", 350, 250, 20, RED);
     }

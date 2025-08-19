@@ -1,6 +1,7 @@
 #pragma once
 #include "../../objects/grid.h"
 #include "../../objects/snake.h"
+#include "../../utils/timer.h"
 #include "../scene.h"
 
 struct LevelDescription
@@ -9,6 +10,13 @@ struct LevelDescription
     CellIndex startingPosition;
     float speed;
     uint32_t targetScore;
+};
+
+enum LevelState
+{
+    Starting,
+    Playing,
+    GameOver
 };
 
 class Level : public Scene
@@ -25,7 +33,7 @@ class Level : public Scene
     Snake m_snake;
     CellIndex m_food;
 
-    bool m_alive = true;
+    Timer m_timer;
+    LevelState m_state = LevelState::Starting;
     uint16_t m_score = 0;
-    float m_timer = 0;
 };
