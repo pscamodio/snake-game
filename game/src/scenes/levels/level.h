@@ -29,6 +29,11 @@ class Level : public Scene
     void render(Game &game) override;
 
   private:
+    void reset();
+
+    CellIndex checkMove(float deltaTime);
+    void eat(Game &game);
+
     LevelDescription m_levelDescription;
     Snake m_snake;
     CellIndex m_food;

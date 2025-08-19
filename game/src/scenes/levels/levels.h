@@ -16,5 +16,5 @@ const std::array<LevelDescription, 3> LEVELS = {
      {// Level 3
       .grid = {10, 10, {{1, 1}, {2, 2}, {3, 3}, {4, 4}}},
       .startingPosition = {5, 1},
-      .speed = 0.06f,
-      .targetScore = 15}}};
+      .speed = 0.08f,
+      .targetScore = 10}}};

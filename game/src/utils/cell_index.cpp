@@ -1,5 +1,10 @@
 #include "cell_index.h"
 
+bool isValid(const CellIndex &cell)
+{
+    return cell.row >= 0 && cell.col >= 0;
+}
+
 CellIndex operator+(const CellIndex &a, const CellIndex &b)
 {
     return {a.row + b.row, a.col + b.col};
