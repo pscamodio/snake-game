@@ -1,5 +1,6 @@
 #include "menu.h"
-#include "../levels/level_1.h"
+#include "../levels/level.h"
+#include "../levels/levels.h"
 #include "raygui.h"
 
 Menu::Menu()
@@ -16,7 +17,7 @@ void Menu::update(Game &game, [[maybe_unused]] float deltaTime)
 {
     if (IsKeyPressed(KEY_ENTER))
     {
-        game.queueSceneChange(std::make_unique<Level1>());
+        game.queueSceneChange(std::make_unique<Level>(LEVELS[0]));
     }
 }
 
@@ -31,6 +32,6 @@ void Menu::render(Game &game)
 
     if (GuiButton({centerX, centerY, buttonWidth, buttonHeight}, "Play Snake") > 0)
     {
-        game.queueSceneChange(std::make_unique<Level1>());
+        game.queueSceneChange(std::make_unique<Level>(LEVELS[0]));
     }
 }

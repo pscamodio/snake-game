@@ -9,7 +9,7 @@ Game::Game()
 {
     // Initialize the window with settings
     SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
-    InitWindow(m_runtimeState.windowWidth, m_runtimeState.windowHeight, m_settings.windowTitle);
+    InitWindow(m_rendering.windowWidth, m_rendering.windowHeight, m_settings.windowTitle);
     SetWindowMinSize(m_settings.minScreenWidth, m_settings.minScreenHeight);
     SetTargetFPS(m_settings.targetFps);
     m_currentScene = std::make_unique<Menu>();
@@ -43,12 +43,12 @@ void Game::updateGameState()
     const auto windowHeight = GetScreenHeight();
     const auto gameWidth = static_cast<int>(m_settings.gameWidth);
     const auto gameHeight = static_cast<int>(m_settings.gameHeight);
-    const auto scale = std::min(static_cast<float>(m_runtimeState.windowWidth) / gameWidth,
-                                static_cast<float>(m_runtimeState.windowHeight) / gameHeight);
+    const auto scale = std::min(static_cast<float>(m_rendering.windowWidth) / gameWidth,
+                                static_cast<float>(m_rendering.windowHeight) / gameHeight);
 
-    m_runtimeState.windowWidth = windowWidth;
-    m_runtimeState.windowHeight = windowHeight;
-    m_runtimeState.scale = scale;
+    m_rendering.windowWidth = windowWidth;
+    m_rendering.windowHeight = windowHeight;
+    m_rendering.scale = scale;
 
     // Compute mouse position in the game coordinate system
     Vector2 mouse = GetMousePosition();
@@ -83,7 +83,7 @@ void Game::renderToWindow()
     if (!m_gameRenderTarget)
         return;
 
-    const auto &[windowWidth, windowHeight, scale] = m_runtimeState;
+    const auto &[windowWidth, windowHeight, scale] = m_rendering;
 
     BeginDrawing();
     ClearBackground(BLACK); // Clear screen background
@@ -120,7 +120,17 @@ auto Game::settings() const -> const Settings &
     return m_settings;
 }
 
-auto Game::runtimeState() const -> const RuntimeState &
+auto Game::runtimeState() const -> const Rendering &
 {
-    return m_runtimeState;
+    return m_rendering;
+}
+
+auto Game::gameState() const -> const GameState &
+{
+    return m_gameState;
+}
+
+void Game::pushGameState(GameState state)
+{
+    m_gameState = std::move(state);
 }

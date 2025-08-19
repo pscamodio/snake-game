@@ -1,5 +1,4 @@
 #include "game.h"
-#include "settings.h"
 
 int main()
 {

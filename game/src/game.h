@@ -1,7 +1,9 @@
 #pragma once
 
 #include "raylib.h"
-#include "settings.h"
+#include "state/game.h"
+#include "state/rendering.h"
+#include "state/settings.h"
 #include "utils/resource.h"
 #include <memory>
 
@@ -17,7 +19,10 @@ class Game
     void queueSceneChange(std::unique_ptr<Scene> newScene);
 
     const Settings &settings() const;
-    const RuntimeState &runtimeState() const;
+    const Rendering &runtimeState() const;
+    const GameState &gameState() const;
+
+    void pushGameState(GameState state);
 
   private:
     void changeSceneIfNeeded();
@@ -27,7 +32,8 @@ class Game
 
     // Add private member variables and functions here
     Settings m_settings = {};
-    RuntimeState m_runtimeState = {};
+    Rendering m_rendering = {};
+    GameState m_gameState = {};
     Font m_defaultFont;
     std::unique_ptr<Scene> m_currentScene;
 

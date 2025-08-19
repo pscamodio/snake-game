@@ -5,6 +5,11 @@ bool isInsideGrid(const Grid &grid, const CellIndex &cell)
     return cell.row >= 0 && cell.row < grid.rows && cell.col >= 0 && cell.col < grid.cols;
 }
 
+bool isObstacle(const Grid &grid, const CellIndex &cell)
+{
+    return std::find(grid.obstacles.begin(), grid.obstacles.end(), cell) != grid.obstacles.end();
+}
+
 auto getRandomFreePosition(const Grid &grid, const std::vector<CellIndex> &occupiedCells)
     -> CellIndex
 {
@@ -13,6 +18,7 @@ auto getRandomFreePosition(const Grid &grid, const std::vector<CellIndex> &occup
     {
         pos.row = rand() % grid.rows;
         pos.col = rand() % grid.cols;
-    } while (std::find(occupiedCells.begin(), occupiedCells.end(), pos) != occupiedCells.end());
+    } while (std::find(occupiedCells.begin(), occupiedCells.end(), pos) != occupiedCells.end() ||
+             isObstacle(grid, pos));
     return pos;
 }

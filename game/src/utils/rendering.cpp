@@ -3,7 +3,7 @@
 
 void renderGrid(const Grid &grid, const Settings &settings)
 {
-    const auto [row, cols] = grid;
+    const auto [row, cols, obstacles] = grid;
     const float gameWidth = settings.gameWidth;
     const float gameHeight = settings.gameHeight;
     const int cellSize = settings.cellSize;
@@ -20,6 +20,12 @@ void renderGrid(const Grid &grid, const Settings &settings)
     {
         DrawLineEx({startX + j * cellSize, startY},
                    {startX + j * cellSize, startY + row * cellSize}, 4.F, LIGHTGRAY);
+    }
+    for (const auto &obstacle : obstacles)
+    {
+        const auto posX = static_cast<int>(startX + obstacle.row * cellSize);
+        const auto posY = static_cast<int>(startY + obstacle.col * cellSize);
+        DrawRectangle(posX, posY, cellSize, cellSize, DARKGRAY);
     }
 }
 
