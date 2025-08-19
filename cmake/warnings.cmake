@@ -2,7 +2,7 @@
 #
 # https://github.com/lefticus/cppbestpractices/blob/master/02-Use_the_Tools_Available.md
 
-function(myproject_set_project_warnings project_name)
+function(target_configure_warnings project_name)
   set(MSVC_WARNINGS
       /W4 # Baseline reasonable warnings
       /w14242 # 'identifier': conversion from 'type1' to 'type2', possible loss
@@ -88,25 +88,26 @@ function(myproject_set_project_warnings project_name)
     MSVC_WARNINGS
     /WX)
 
-  if (ENABLE_WARNINGS_AS_ERRORS)
-        if(MSVC)
-        set(PROJECT_WARNINGS_CXX ${MSVC_WARNINGS})
-        elseif(
-        CMAKE_CXX_COMPILER_ID
-        MATCHES
-        ".*Clang")
-        set(PROJECT_WARNINGS_CXX ${CLANG_WARNINGS})
-        elseif(
-        CMAKE_CXX_COMPILER_ID
-        STREQUAL
-        "GNU")
-        set(PROJECT_WARNINGS_CXX ${GCC_WARNINGS})
-        else()
-        message(
+  if(SNAKE_WARNINGS_AS_ERRORS)
+    if(MSVC)
+      set(PROJECT_WARNINGS_CXX ${MSVC_WARNINGS})
+    elseif(
+      CMAKE_CXX_COMPILER_ID
+      MATCHES
+      ".*Clang")
+      set(PROJECT_WARNINGS_CXX ${CLANG_WARNINGS})
+    elseif(
+      CMAKE_CXX_COMPILER_ID
+      STREQUAL
+      "GNU")
+      set(PROJECT_WARNINGS_CXX ${GCC_WARNINGS})
+    else()
+      message(
         AUTHOR_WARNING
-                "No compiler warnings set for CXX compiler: '${CMAKE_CXX_COMPILER_ID}'")
-        # TODO support Intel compiler
-        endif()
+          "No compiler warnings set for CXX compiler: '${CMAKE_CXX_COMPILER_ID}'"
+      )
+      # TODO support Intel compiler
+    endif()
   endif()
 
   # use the same warning flags for C

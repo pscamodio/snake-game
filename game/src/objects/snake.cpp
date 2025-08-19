@@ -1,5 +1,7 @@
 #include "snake.h"
 #include "raylib.h"
+#include <algorithm>
+#include <optional>
 
 bool updateSnakeDirectionFromKeyboard(Snake &snake)
 {
